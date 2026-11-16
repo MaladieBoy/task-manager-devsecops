@@ -78,6 +78,7 @@ pipeline {
             steps {
                 sh '''
                     trivy image \
+		      --timeout 15m \
                       --scanners vuln \
                       --severity HIGH,CRITICAL \
                       --exit-code 0 \
