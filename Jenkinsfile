@@ -59,6 +59,7 @@ pipeline {
                           --project "Task Manager" \
                           --scan /src/pom.xml \
                           --nvdApiKey "$NVD_API_KEY" \
+                          --nvdApiDelay 6000 \
                           --format HTML \
                           --format XML \
                           --out /report
