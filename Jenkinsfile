@@ -57,7 +57,7 @@ pipeline {
                           -v "$WORKSPACE/dependency-check-data:/usr/share/dependency-check/data" \
                           owasp/dependency-check:latest \
                           --project "Task Manager" \
-                          --scan /src/pom.xml \
+                          --scan /src \
                           --nvdApiKey "$NVD_API_KEY" \
                           --nvdApiDelay 6000 \
                           --format HTML \
