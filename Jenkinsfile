@@ -43,21 +43,27 @@ pipeline {
 
         stage('OWASP Dependency-Check') {
             steps {
-                sh '''
-                    mkdir -p dependency-check-report dependency-check-data
+                withCredentials([string(
+                    credentialsId: 'nvd-api-key',
+                    variable: 'NVD_API_KEY'
+                )]) {
+                    sh '''
+                        mkdir -p dependency-check-report dependency-check-data
 
-                    docker run --rm \
-                      --user "$(id -u):$(id -g)" \
-                      -v "$WORKSPACE:/src:ro" \
-                      -v "$WORKSPACE/dependency-check-report:/report" \
-                      -v "$WORKSPACE/dependency-check-data:/usr/share/dependency-check/data" \
-                      owasp/dependency-check:latest \
-                      --project "Task Manager" \
-                      --scan /src/pom.xml \
-                      --format HTML \
-                      --format XML \
-                      --out /report
-                '''
+                        docker run --rm \
+                          --user "$(id -u):$(id -g)" \
+                          -v "$WORKSPACE:/src:ro" \
+                          -v "$WORKSPACE/dependency-check-report:/report" \
+                          -v "$WORKSPACE/dependency-check-data:/usr/share/dependency-check/data" \
+                          owasp/dependency-check:latest \
+                          --project "Task Manager" \
+                          --scan /src/pom.xml \
+                          --nvdApiKey "$NVD_API_KEY" \
+                          --format HTML \
+                          --format XML \
+                          --out /report
+                    '''
+                }
             }
         }
 
