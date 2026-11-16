@@ -134,7 +134,7 @@ pipeline {
               -quickout "$WORKSPACE/zap-report.html"
         '''
     }
-}
+}}
 
     post {
         always {
