@@ -121,19 +121,20 @@ pipeline {
         }
 
         stage('OWASP ZAP DAST Scan') {
-            steps {
-                sh '''
-                    MINIKUBE_IP=$(minikube ip)
+    steps {
+        sh '''
+            MINIKUBE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
 
-                    /usr/share/zaproxy/zap.sh \
-                      -cmd \
-                      -silent \
-                      -quickurl "http://${MINIKUBE_IP}:30080" \
-                      -quickout "$WORKSPACE/zap-report.html"
-                '''
-            }
-        }
+            echo "Scanning application at http://${MINIKUBE_IP}:30080"
+
+            /usr/share/zaproxy/zap.sh \
+              -cmd \
+              -silent \
+              -quickurl "http://${MINIKUBE_IP}:30080" \
+              -quickout "$WORKSPACE/zap-report.html"
+        '''
     }
+}
 
     post {
         always {
