@@ -1,0 +1,27 @@
+PHASE 1 - DEVELOPMENT AND TESTING
+
+Environment:
+- Java: OpenJDK 25.0.5.1
+- Maven: 3.9.11
+- Framework: Spring Boot 4.0.0
+
+Compilation:
+- Command: mvn clean compile
+- Result: BUILD SUCCESS
+
+Unit tests:
+- Command: mvn clean verify
+- Tests run: 8
+- Failures: 0
+- Errors: 0
+- Skipped: 0
+- Result: BUILD SUCCESS
+
+Application:
+- Command: mvn spring-boot:run
+- Result: Application started successfully.
+- Embedded Tomcat: Port 8080
+
+API tests:
+- GET /tasks: HTTP 200, returned an empty list.
+- POST /tasks: Successfully created a task.
